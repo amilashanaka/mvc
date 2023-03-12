@@ -8,6 +8,11 @@
   </div>
 
   <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <textarea  class="form-control" name="content"></textarea>
+  </div>
+
+  <div class="mb-3">
     <label for="e-mail" class="form-label">Email address</label>
     <input type="email" class="form-control" name="e-mail" >
    
