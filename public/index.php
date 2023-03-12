@@ -5,17 +5,17 @@ require_once __DIR__ . './../vendor/autoload.php';
 
 use app\core\Application;
 
-$app= new Application();
+$app= new Application(dirname(__DIR__));
 // $router= new Router();
-$app->router->get('/', function(){
+$app->router->get('/','home');
 
-    return 'Hello World';
+$app->router->get('/contact','contact');
 
-});
+$app->router->post('/contact',function(){
 
-$app->router->get('/contact', function(){
 
-    return 'Contact';
+    return "Handeling submitted data";
+
 
 });
 
