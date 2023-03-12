@@ -2,28 +2,37 @@
 
 namespace app\controllers;
 use app\core\Application;
+use app\core\Controller;
+use app\core\Request;
 
-class SiteController{
+class SiteController extends Controller{
 
 
 
     public function index(){
 
+        $params=[
+            'name' => 'Amila',
 
-        return Application::$app->router->renderView('home');
+
+        ];
+
+        return $this->render('home',$params);
     }
 
 
     public function contact(){
 
 
-        return Application::$app->router->renderView('contact');
+        return $this->render('contact');
     }
 
-    public function submit_conttact(){
+    public function submit_conttact(Request $request){
 
 
-        var_dump($_POST);
+      $body= $request->getBody();
+
+      var_dump($body);
     }
 
 
