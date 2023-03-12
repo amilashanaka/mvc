@@ -1,0 +1,16 @@
+{
+    "name": "mvc/public",
+
+    "authors": [
+        {
+            "name": "amilashanaka",
+            "email": "dsa.amilashanaka@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "."
+        }
+    },
+    "require": {}
+}
