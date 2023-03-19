@@ -30,6 +30,7 @@ class SiteController extends Controller{
     public function submit_conttact(Request $request){
 
 
+
       $body= $request->getBody();
 
       var_dump($body);

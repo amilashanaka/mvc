@@ -1,6 +1,7 @@
 <?php
 
 namespace app\core;
+use app\core\Controller;
 
 class Application
 {
@@ -15,6 +16,9 @@ class Application
 
   public static Application $app;
 
+  public Controller $controller;
+  
+  
   public function __construct($rootPath)
   {
 
@@ -33,4 +37,20 @@ class Application
 
     echo  $this->router->resolve();
   }
+
+  public function getController(){
+
+    return $this->controller;
+  }
+
+
+  public function setController(Controller $controller){
+
+    $this->controller = $controller;
+
+
+  }
+
+
+
 }
