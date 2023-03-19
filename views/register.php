@@ -6,14 +6,19 @@
 
 <div class="mb-3">
     <label for="username" class="form-label">User Name</label>
-    <input type="text" class="form-control " name="username" value="<?=$model->username?>">
+    <input type="text" class="form-control <?=$model->hasError('username')? ' is-invalid': '' ?>" name="username" value="">
+
+  <div class="invalid-feedback">
+    <?=$model->getFirstError('username')?>
+  </div>
+
   </div>
 
 
 
   <div class="mb-3">
     <label for="email" class="form-label">Email address</label>
-    <input type="email" class="form-control" name="email" value="<?=$model->email?>" >
+    <input type="email" class="form-control" name="email" value="" >
    
   </div>
 
