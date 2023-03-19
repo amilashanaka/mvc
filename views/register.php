@@ -2,16 +2,18 @@
 
 <form action="" method="post">
 
+
+
 <div class="mb-3">
     <label for="username" class="form-label">User Name</label>
-    <input type="text" class="form-control" name="username">
+    <input type="text" class="form-control " name="username" value="<?=$model->username?>">
   </div>
 
 
 
   <div class="mb-3">
-    <label for="e-mail" class="form-label">Email address</label>
-    <input type="email" class="form-control" name="e-mail" >
+    <label for="email" class="form-label">Email address</label>
+    <input type="email" class="form-control" name="email" value="<?=$model->email?>" >
    
   </div>
 

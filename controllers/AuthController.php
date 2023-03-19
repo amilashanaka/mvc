@@ -18,17 +18,18 @@ class AuthController extends Controller
 
         }
 
-        $this->setLayout('auth');
-
+     
         return $this->render('login');
     }
 
 
     public function register(Request $request)
     {
+        $registerModel=new RegisterModel();
+
         if($request->isPost()){
 
-            $registerModel=new RegisterModel();
+           
             $registerModel->loadData($request->getBody());
 
           
@@ -36,11 +37,14 @@ class AuthController extends Controller
 
                 return 'sucessfully registered';
 
+
+
             }
 
-            var_dump($registerModel->errors);
-            exit;
+         
 
+       
+          
 
             return $this->render('register',['model'=>$registerModel]);
 
@@ -48,6 +52,6 @@ class AuthController extends Controller
 
         $this->setLayout('auth');
 
-       // return $this->render('register',['model'=>$registerModel]);
+        return $this->render('register',['model'=>$registerModel]);
     }
 }
