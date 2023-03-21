@@ -39,12 +39,21 @@ class AuthController extends Controller
 
             }
 
+        //     echo '<pre>';
+
+        //  var_dump($registerModel->errors);
+
+        //  echo '</pre>';
+        //  exit;
+
+            $this->setLayout('auth');
+
             return $this->render('register',['model'=>$registerModel]);
 
         }
 
     
-       
+       $this->setLayout('auth');
 
         return $this->render('register',['model'=>$registerModel]);
     }

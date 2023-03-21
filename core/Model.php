@@ -12,6 +12,8 @@ abstract class Model
     public const RULE_MATCH = 'match';
     public const RULE_MAX = 'max';
 
+    public array $errors = [];
+
 
 
     public function loadData($data)
@@ -30,7 +32,7 @@ abstract class Model
 
     abstract public function rules(): array;
 
-    public array $errors = [];
+   
 
     public function validate()
     {
@@ -67,14 +69,14 @@ abstract class Model
 
                 }
 
-                if($ruleName === self::RULE_MIN && strlen($value<$rule['min'])){
+                if($ruleName === self::RULE_MIN && strlen($value)<$rule['min']){
 
                     $this->addError($attribute, self::RULE_MIN,$rule);
 
 
                 }
 
-                if($ruleName === self::RULE_MAX && strlen($value>$rule['max'])){
+                if($ruleName === self::RULE_MAX && strlen($value)>$rule['max']){
 
                     $this->addError($attribute, self::RULE_MAX,$rule);
 
