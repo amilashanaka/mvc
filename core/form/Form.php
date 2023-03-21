@@ -1,20 +1,30 @@
 <?php
 
 namespace app\core\form;
+use app\core\Model;
+use app\core\form\Field;
 
 class Form{
 
-public static function begin(){
+public static function begin($action,$method){
+
+    echo  ( sprintf('<form action="%s" method="%s" >',$action,$method));
 
 
 
-    return '<form action="" method="" >';
+
+    return new Form();
 }
 
 
-pblic static function end(){
+public  static function end(){
 
-    return '</form>';
+    echo '</form>';
+}
+
+public function field(Model $model, $attribute){
+
+    return new Field($model,$attribute);
 }
 
 }

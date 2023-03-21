@@ -1,10 +1,27 @@
+<?php
+
+use app\core\form\Form;
+
+?>
 <h1> Register</h1>
 
-<form action="" method="post">
+<!-- <form action="" method="post"> -->
+
+<?php $form=Form::begin('','post')?>
+
+<?php echo $form->field($model,'username') ?>
+
+<?php echo $form->field($model,'email') ?>
+<?php echo $form->field($model,'password') ?>
+<?php echo $form->field($model,'confoirm_password') ?>
+
+<button type="submit" class="btn btn-primary">Register</button>
+
+<?php Form::end() ?>
 
 
 
-<div class="mb-3">
+<!-- <div class="mb-3">
     <label for="username" class="form-label">User Name</label>
     <input type="text" class="form-control <?=$model->hasError('username')? ' is-invalid': '' ?>" name="username" value="">
 
@@ -37,4 +54,4 @@
   </div>
 
   <button type="submit" class="btn btn-primary">Register</button>
-</form>
+</form> -->
