@@ -1,15 +1,10 @@
 <?php
-use app\core\Application;
-class m0001_initial{
+class m0002_users{
 
 
     public function up(){
 
-      $db=Application::$app->db;
-
-      
-
-      $db->pdo->exec($sql);
+        echo "apply migration";
     }
 
     public function down(){

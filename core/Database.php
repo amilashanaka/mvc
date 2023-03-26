@@ -29,8 +29,40 @@ class Database
     public function applyMigrations()
     {
         $this->createMigrationsTables();
-        $this->getAppliedMigrations();
+        $appliedMigation= $this->getAppliedMigrations();
+
+        $newMigration = [];
+
+
         $files=scandir(Application::$ROOT_DIR.'/migrations');
+        $toApplyMigrations=array_diff($files, $appliedMigation);
+
+        foreach ($toApplyMigrations as $migration){
+
+
+            if($migration==='.' || $migration=='..'){
+
+                continue;
+            }
+
+            require_once Application::$ROOT_DIR.'/migrations/'.$migration;
+            $className=pathinfo($migration,PATHINFO_FILENAME);
+            $instance=new $className();
+            $this->log("Appling migration for $migration");
+            $instance->up();
+            $this->log("Applied migration for $migration");
+            $newMigration[]=$migration;
+            
+        }
+
+        if(!empty($newMigration)){
+
+            $this->saveMigrations($newMigration);
+        }else{
+            $this->log( "All migrations are applied");
+        }
+
+      
 
     }
 
@@ -38,8 +70,8 @@ class Database
     {
 
         $sql = "CREATE TABLE IF NOT EXISTS migrations (
-            id INT AUTO INCREMENT PRIMARY KEY
-            migration VARCHAR(255)
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            migration VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             ) ENGINE=INNODB;";
 
@@ -52,5 +84,22 @@ class Database
         $statement->execute();
 
         return $statement->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
+
+    public function saveMigrations(array $migrations){
+
+       $quray =implode(",", array_map(fn($m)=>"('$m')",$migrations));
+
+
+       $statement= $this->pdo->prepare("INSERT INTO migrations (migration) VALUES $quray ");
+       $statement->execute();
+
+
+    }
+
+    protected function log($message){
+
+        echo '['.date('Y-m-d H:i:s').']: '.$message.PHP_EOL;
     }
 }
