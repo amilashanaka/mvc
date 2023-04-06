@@ -33,7 +33,7 @@ class AuthController extends Controller
             $User->loadData($request->getBody());
 
           
-            if($User->validate() && $User->register()){
+            if($User->validate() && $User->save()){
 
               
 

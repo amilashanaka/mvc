@@ -20,12 +20,17 @@ $params=array_map(fn($attr)=>":$attr",$attributes);
 
 
 // $sql="Insert into " . $tableName."(".implode(','.$attributes).") values(".implode(',',$params).")";
+$statement=self::prepare("INSERT INTO $tableName(".implode(',',$attributes).") VALUES(".implode(',',$params).")");
 
 
+foreach ($attributes as $attribute){
 
-$statement=self::prepare("Insert into $tableName(".implode(','.$attributes).") values(".implode(',',$params).")");
-var_dump($statement);
-exit;
+$statement->bindValue(":$attribute",$this->{$attribute});
+
+}
+$statement->execute();
+
+return true;
 
     
 }

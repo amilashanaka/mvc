@@ -7,18 +7,25 @@ use app\core\DbModel;
 
 class User extends DbModel{
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
+
     public string $username='';
     public string $email='';
     public string $password='';
     public string $confoirm_password='';
+    public int $status=self::STATUS_INACTIVE;
 
 
-    public function register(){
+    public function save(){
 
-       return  $this->save();
+        $this->status=self::STATUS_INACTIVE;
 
+        $this->password=password_hash($this->password,PASSWORD_DEFAULT);
 
-        echo "Registering new user...";
+       return  parent::save();
+       
     }
 
 
@@ -34,7 +41,7 @@ class User extends DbModel{
 
             'username'=>[self::RULE_REQUIRED],
             'password'=>[self::RULE_REQUIRED],
-            'email'=>[self::RULE_REQUIRED,self::RULE_EMAIL],
+            'email'=>[self::RULE_REQUIRED,self::RULE_EMAIL,[self::RULE_UNIQUE,'class'=>self::class,'attribute'=>'username']],
             'password'=>[self::RULE_REQUIRED,[self::RULE_MIN,'min'=>8],[self::RULE_MAX,'max'=>24]],
             'confoirm_password'=>[self::RULE_REQUIRED,[self::RULE_MATCH,'match'=>'password']],
 
@@ -46,7 +53,7 @@ class User extends DbModel{
     public function attributes(): array
     {
 
-        return ['username','password','email'];
+        return ['username','password','email','status'];
     }
 
 
