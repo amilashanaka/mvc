@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Request;
+use app\core\Application;
 use app\models\User;
 
 class AuthController extends Controller
@@ -37,16 +38,10 @@ class AuthController extends Controller
 
               
 
-                return 'sucessfully registered';
+                Application::$app->response->redirect('/');
 
             }
 
-        //     echo '<pre>';
-
-        //  var_dump($User->errors);
-
-        //  echo '</pre>';
-        //  exit;
 
             $this->setLayout('auth');
 
