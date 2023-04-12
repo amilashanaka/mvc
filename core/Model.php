@@ -40,6 +40,12 @@ abstract class Model
 
     }
 
+
+    public function getLable($attribute)
+    {
+        return $this->labels()[$attribute] ?? $attribute;
+    }
+
    
 
     public function validate()
@@ -110,7 +116,7 @@ abstract class Model
                     $record=$statement->fetchObject();
                     if($record){
 
-                        $this->addError($attribute, self::RULE_UNIQUE,['filed'=>$attribute]);
+                        $this->addError($attribute, self::RULE_UNIQUE,['filed'=>$this->getLable($attribute)]);
                     }
 
 
