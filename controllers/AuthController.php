@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\core\Request;
 use app\core\Application;
 use app\models\User;
+use app\models\LoginForm;
 
 class AuthController extends Controller
 {
@@ -13,6 +14,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $loginForm = new LoginForm();
         if($request->isPost()){
 
             return 'handel submited data';
