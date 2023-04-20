@@ -61,25 +61,17 @@ class Router
            $callback[0]= Application::$app->controller;
 
         }
-        return call_user_func($callback,$this->request);
+        return call_user_func($callback,$this->request, $this->response);
     }
 
 
     public function renderView($view,$params=[])
     {
-
-
-
-
-
         $layoutContent = $this->layoutContent();
-
-
 
         $viewContent = $this->renderOnlyView($view,$params);
 
         return str_replace('{{content}}', $viewContent, $layoutContent);
-
 
         include_once Application::$ROOT_DIR . "./views/$view.php";
     }

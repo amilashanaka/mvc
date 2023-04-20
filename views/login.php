@@ -8,12 +8,10 @@ use app\core\form\Form;
 
 <?php $form=Form::begin('','post')?>
 
-<?php echo $form->field($model,'username') ?>
-
 <?php echo $form->field($model,'email') ?>
 <?php echo $form->field($model,'password')->passwordField() ?>
 
 
-<button type="submit" class="btn btn-primary">Loginn</button>
+<button type="submit" class="btn btn-primary">Login</button>
 
 <?php Form::end() ?>

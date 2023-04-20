@@ -2,12 +2,15 @@
 
 namespace app\models;
 use app\core\Model;
+use app\models\User;
+use app\core\Application;
 class LoginForm extends Model
 {
 
 
-    public string $e_mail;
-    public string $password;
+    public string $email ='';
+    public string $password ='';
+    public string $username ='';
     
     public function rules():array{
 
@@ -16,6 +19,29 @@ class LoginForm extends Model
             'password' => [self::RULE_REQUIRED]
         
         ];
+    }
+
+    public function login()
+    {
+        $user = User::findOne(['email' => $this->email]);
+
+        if(!$user)
+        {
+            $this->addError('email','user not found with email address'); 
+            return false;
+
+        }
+
+
+   
+        if(!password_veryfy($this->password, $user->password))
+        {
+            $this->addError('password','password is incorrect');
+            return false;
+
+        }
+        return Application::$app->login($user);
+
     }
 
 

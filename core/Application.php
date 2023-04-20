@@ -21,6 +21,10 @@ class Application
   public Controller $controller;
 
   public Database $db;
+
+  public ?DbModel $user;
+
+  public string $userClass;
   
   
   public function __construct($rootPath, array $config )
@@ -38,6 +42,22 @@ class Application
     $this->router = new Router($this->request,$this->response);
 
     $this->db = new Database($config['db']);
+
+    $this->userClass = $config['user_class'];
+
+    $primeryValue = $this->session->get('user');
+
+    if ($primeryValue)
+    {
+      $primeryKey = $this->userClass->primeryKey();
+
+      $this->user = $this->userClass::fileinode([$primeryKey => $primeryValue]);
+
+    }else{
+      $this->user = null;
+    }
+
+
   }
 
   public function run()
@@ -56,6 +76,25 @@ class Application
 
     $this->controller = $controller;
 
+
+  }
+
+  public function login(Dbmodel $user)
+  {
+    $this->user = $user;
+    $primery_key = $user->primeryKey();
+    $primeryValue = $user->{$primery_key};
+    $this->session->set('user',$primeryValue);
+    return true;
+
+
+  }
+
+  public function logout()
+  {
+
+    $this->user = null;
+    $this->session->remove('user');
 
   }
 

@@ -8,8 +8,11 @@ $dotenv->load();
 use app\controllers\AuthController;
 use app\controllers\SiteController;
 use app\core\Application;
+use app\models\User;
 
 $config=[
+
+    'user_class'=> User::class,
 
     'db'=>[
         'dsn' => $_ENV['DB_DSN'],
