@@ -21,6 +21,11 @@ class LoginForm extends Model
         ];
     }
 
+    public function labels(): array
+    {
+        return ['email'=>'Your Email', 'password'=>'Your Password'];
+    }
+
     public function login()
     {
         $user = User::findOne(['email' => $this->email]);
@@ -34,7 +39,7 @@ class LoginForm extends Model
 
 
    
-        if(!password_veryfy($this->password, $user->password))
+        if(!password_verify($this->password, $user->password))
         {
             $this->addError('password','password is incorrect');
             return false;

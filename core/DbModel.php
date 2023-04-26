@@ -8,7 +8,7 @@ abstract class DbModel extends Model{
 
 abstract public static function tableName(): string;
 abstract public function attributes(): array;
-abstract public function primeryKey(): string;
+abstract public static function primeryKey(): string;
 
 public function save(){
 
@@ -41,16 +41,26 @@ public static function findOne($where)
 {
 
     $tableName = static::tableName();
+
+
+
+  
    
     $attributes = array_keys($where);
+    
     $sql =  implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
     $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
-    foreach ($where as $key => $value)
+
+    foreach ($where as $key => $item)
     {
-        $statement ->bindValue(":$key",$value);
+        
+        $statement ->bindValue(":$key",$item);
+       
     }
 
     $statement ->execute();
+
+   
 
     return $statement->fetchObject(static::class);
 

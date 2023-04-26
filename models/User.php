@@ -3,9 +3,9 @@
 namespace app\models;
 
 use app\core\DbModel;
+use app\core\UserModel;
 
-
-class User extends DbModel{
+class User extends UserModel{
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -34,7 +34,7 @@ class User extends DbModel{
         return 'users';
     }
 
-    public  function primeryKey(): string
+    public static function primeryKey(): string
     {
         return 'id';
     }
@@ -46,10 +46,9 @@ class User extends DbModel{
 
             'username'=>[self::RULE_REQUIRED],
             'password'=>[self::RULE_REQUIRED],
-            'email'=>[self::RULE_REQUIRED,self::RULE_EMAIL,[self::RULE_UNIQUE,'class'=>self::class,'attribute'=>'username']],
+            'email'=>[self::RULE_REQUIRED,self::RULE_EMAIL,[self::RULE_UNIQUE,'class'=>self::class,'attribute'=>'email']],
             'password'=>[self::RULE_REQUIRED,[self::RULE_MIN,'min'=>8],[self::RULE_MAX,'max'=>24]],
-            'confoirm_password'=>[self::RULE_REQUIRED,[self::RULE_MATCH,'match'=>'password']],
-
+            'confoirm_password'=>[self::RULE_REQUIRED,[self::RULE_MATCH,'match'=>'password']]
 
         ];
     }
@@ -73,7 +72,10 @@ class User extends DbModel{
 
 
 
+    public  function get_display_name() : string
+    {
 
+        return $this->username;
 
-
+    }
 }

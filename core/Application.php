@@ -47,11 +47,14 @@ class Application
 
     $primeryValue = $this->session->get('user');
 
+  
+
     if ($primeryValue)
     {
-      $primeryKey = $this->userClass->primeryKey();
+      $primeryKey = $this->userClass::primeryKey();
+  
 
-      $this->user = $this->userClass::fileinode([$primeryKey => $primeryValue]);
+      $this->user = $this->userClass::findOne([$primeryKey => $primeryValue]);
 
     }else{
       $this->user = null;
@@ -82,8 +85,8 @@ class Application
   public function login(Dbmodel $user)
   {
     $this->user = $user;
-    $primery_key = $user->primeryKey();
-    $primeryValue = $user->{$primery_key};
+    $primeryKey =$user->primeryKey();
+    $primeryValue = $user->{$primeryKey};
     $this->session->set('user',$primeryValue);
     return true;
 
@@ -97,6 +100,12 @@ class Application
     $this->session->remove('user');
 
   }
+
+  public static function isGuest()
+  {
+    return !self::$app->user;
+  }
+
 
 
 

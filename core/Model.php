@@ -57,6 +57,8 @@ abstract class Model
 
             $value = $this->{$attribute};
 
+          
+
 
             foreach ($rules as $rule) {
 
@@ -156,6 +158,7 @@ abstract class Model
     {
       
         $this->errors[$attribute][]=$message;
+       
     }
 
 
@@ -163,8 +166,6 @@ abstract class Model
     {
 
         return [
-
-
 
             self::RULE_REQUIRED => 'This field is required',
             self::RULE_EMAIL => 'This field must be valid email address',
@@ -183,8 +184,6 @@ abstract class Model
 
 
         return $this->errors[$attribute] ?? false;
-
-
 
 
     }

@@ -28,13 +28,11 @@ class AuthController extends Controller
 
             
                     $response->redirect('/');
+                    return;
 
                 
               
 
-            }else{
-                var_dump($loginForm->login());
-                exit;
             }
 
            
@@ -68,5 +66,20 @@ class AuthController extends Controller
         $this->setLayout('auth');
 
         return $this->render('register', ['model' => $User]);
+    }
+
+    public function logout(Request $request, Response $response){
+
+        Application::$app->logout();
+        $response->redirect('/');
+
+
+
+
+    }
+
+    public function profile(){
+
+        
     }
 }
