@@ -1,112 +1,119 @@
 <?php
 
 namespace app\core;
+
 use app\core\Controller;
 
 class Application
 {
 
-  public static string $ROOT_DIR;
+    public static string $ROOT_DIR;
 
-  public Router $router;
+    public string $layout = 'main';
 
-  public Request $request;
+    public Router $router;
 
-  public Response $response;
+    public Request $request;
 
-  public Session $session;
+    public Response $response;
 
-  public static Application $app;
+    public Session $session;
 
-  public Controller $controller;
+    public static Application $app;
 
-  public Database $db;
+    public ?Controller $controller = null;
 
-  public ?DbModel $user;
+    public Database $db;
 
-  public string $userClass;
-  
-  
-  public function __construct($rootPath, array $config )
-  {
+    public ?DbModel $user;
 
+    public View $view;
 
-    self::$ROOT_DIR = $rootPath;
-    self::$app=$this;
-    $this->request = new Request();
-   
-    $this->response = new Response();
+    public string $userClass;
 
-    $this->session = new Session();
-
-    $this->router = new Router($this->request,$this->response);
-
-    $this->db = new Database($config['db']);
-
-    $this->userClass = $config['user_class'];
-
-    $primeryValue = $this->session->get('user');
-
-  
-
-    if ($primeryValue)
+    public function __construct($rootPath, array $config)
     {
-      $primeryKey = $this->userClass::primeryKey();
-  
 
-      $this->user = $this->userClass::findOne([$primeryKey => $primeryValue]);
+        self::$ROOT_DIR = $rootPath;
 
-    }else{
-      $this->user = null;
+        self::$app = $this;
+
+        $this->request = new Request();
+
+        $this->response = new Response();
+
+        $this->session = new Session();
+
+        $this->router = new Router($this->request, $this->response);
+
+        $this->db = new Database($config['db']);
+
+        $this->userClass = $config['user_class'];
+
+        $primeryValue = $this->session->get('user');
+
+        if ($primeryValue) {
+            $primeryKey = $this->userClass::primeryKey();
+
+            $this->user = $this->userClass::findOne([$primeryKey => $primeryValue]);
+
+        } else {
+            $this->user = null;
+        }
+
     }
 
+    public function run()
+    {
 
-  }
+      try
+      {
+        echo $this->router->resolve();
 
-  public function run()
-  {
+      }catch (\Exception $e)
+      {
+        $this->response->setStatusCode($e->getCode());
+        echo $this->router->renderView('error',['exception' => $e]);
 
-    echo  $this->router->resolve();
-  }
+      }
 
-  public function getController(){
+       
+    }
 
-    return $this->controller;
-  }
+    public function getController()
+    {
 
+        return $this->controller;
+    }
 
-  public function setController(Controller $controller){
+    public function setController(Controller $controller)
+    {
 
-    $this->controller = $controller;
+        $this->controller = $controller;
 
+    }
 
-  }
+    public function login(Dbmodel $user)
+    {
+        $this->user = $user;
+        $primeryKey = $user->primeryKey();
+        $primeryValue = $user->{$primeryKey};
+        $this->session->set('user', $primeryValue);
+        return true;
 
-  public function login(Dbmodel $user)
-  {
-    $this->user = $user;
-    $primeryKey =$user->primeryKey();
-    $primeryValue = $user->{$primeryKey};
-    $this->session->set('user',$primeryValue);
-    return true;
+    }
 
+    public function logout()
+    {
 
-  }
+        $this->user = null;
+        $this->session->remove('user');
 
-  public function logout()
-  {
+    }
 
-    $this->user = null;
-    $this->session->remove('user');
-
-  }
-
-  public static function isGuest()
-  {
-    return !self::$app->user;
-  }
-
-
-
+    public static function isGuest()
+    {
+        return !self::$app->user;
+    }
 
 }
