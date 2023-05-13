@@ -50,6 +50,8 @@ class Application
 
         $this->userClass = $config['user_class'];
 
+        $this->view = new View();
+
         $primeryValue = $this->session->get('user');
 
         if ($primeryValue) {

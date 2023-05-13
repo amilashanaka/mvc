@@ -34,7 +34,7 @@ class Controller{
         $this->middlewares[]=$middleware;
     }
 
-    public function getMiddleware()
+    public function getMiddlewares(): array
     {
         return $this->middlewares;
     }
