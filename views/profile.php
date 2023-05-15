@@ -1,4 +1,11 @@
+
+<?php
+
+$this->title='profile';
+
+?>
 <h1> Profile</h1>
+
 
 <form action="" method="post">
 

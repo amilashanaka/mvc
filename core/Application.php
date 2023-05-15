@@ -3,6 +3,8 @@
 namespace app\core;
 
 use app\core\Controller;
+use app\core\db\DbModel;
+use app\core\db\Database;
 
 class Application
 {
@@ -25,7 +27,7 @@ class Application
 
     public Database $db;
 
-    public ?DbModel $user;
+    public ?UserModel $user;
 
     public View $view;
 
@@ -95,7 +97,7 @@ class Application
 
     }
 
-    public function login(Dbmodel $user)
+    public function login(UserModel $user)
     {
         $this->user = $user;
         $primeryKey = $user->primeryKey();
